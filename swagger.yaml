@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Music API
+  version: 1.0.0
+paths:
+  /songs:
+    post:
+      summary: Upload a new song
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                title:
+                  type: string
+                artist:
+                  type: string
+                album:
+                  type: string
+                duration:
+                  type: integer
+      responses:
+        '200':
+          description: Song uploaded successfully
+    get:
+      summary: Get list of songs
+      responses:
+        '200':
+          description: List of songs
+  /songs/{id}/stream:
+    get:
+      summary: Stream a song
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Song stream
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
